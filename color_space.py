@@ -3,6 +3,30 @@ import numpy as np
 
 np.seterr(invalid='ignore')
 
+def BGR2RGB(image: np.ndarray) -> np.ndarray:
+    """
+    Converts a BGR image to RGB.
+
+    Args:
+        image: A BGR image.
+
+    Returns:
+        An RGB image.
+    """
+    return image[..., ::-1]
+
+def RGB2BGR(image: np.ndarray) -> np.ndarray:
+    """
+    Converts an RGB image to BGR.
+
+    Args:
+        image: An RGB image.
+
+    Returns:
+        A BGR image.
+    """
+    return BGR2RGB(image)
+
 def RGB2XYZ(image: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Converts an RGB image to XYZ.
@@ -21,6 +45,18 @@ def RGB2XYZ(image: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     Z = np.dot(image, [0.019334, 0.119193, 0.950227])
 
     return X, Y, Z
+
+def BGR2XYZ(image: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Converts a BGR image to XYZ.
+
+    Args:
+        image: A BGR image.
+
+    Returns:
+        A tuple containing an X image, a Y image, and a Z image.
+    """
+    return RGB2XYZ(BGR2RGB(image))
 
 def XYZ2LUV(X: np.ndarray, Y: np.ndarray, Z: np.ndarray) -> np.ndarray:
     """
@@ -70,3 +106,39 @@ def RGB2LUV(image: np.ndarray) -> np.ndarray:
     """
     X, Y, Z = RGB2XYZ(image)
     return XYZ2LUV(X, Y, Z)
+
+def BGR2LUV(image: np.ndarray) -> np.ndarray:
+    """
+    Converts a BGR image to LUV.
+
+    Args:
+        image: A BGR image.
+
+    Returns:
+        A LUV image.
+    """
+    return RGB2LUV(BGR2RGB(image))
+
+def RGB2GRAY(image: np.ndarray) -> np.ndarray:
+    """
+    Converts an RGB image to grayscale.
+
+    Args:
+        image: An RGB image.
+
+    Returns:
+        A grayscale image.
+    """
+    return np.dot(image, [0.299, 0.587, 0.114])
+
+def BGR2GRAY(image: np.ndarray) -> np.ndarray:
+    """
+    Converts a BGR image to grayscale.
+
+    Args:
+        image: A BGR image.
+
+    Returns:
+        A grayscale image.
+    """
+    return RGB2GRAY(BGR2RGB(image))
