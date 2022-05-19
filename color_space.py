@@ -39,6 +39,8 @@ def RGB2XYZ(image: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     
     image = image / 255.0
+
+    image = np.where(image > 0.04045, ((image + 0.055) / 1.055) ** 2, image / 12.92) * 100
     
     X = np.dot(image, [0.412453, 0.357580, 0.180423])
     Y = np.dot(image, [0.212671, 0.715160, 0.072169])
@@ -78,7 +80,7 @@ def XYZ2LUV(X: np.ndarray, Y: np.ndarray, Z: np.ndarray) -> np.ndarray:
     U_REF = 0.19793943
     V_REF = 0.46831096
 
-    L = np.where((Y / 100) > 0.008856, 116 * np.power((Y / 9), 1 / 3) - 16, 903.3 * (Y / 9))
+    L = np.where((Y / 100) > 0.008856, 116 * np.power((Y / 100), 1 / 3) - 16, 903.3 * (Y / 100))
 
     u_dash = np.where((X + (15 * Y) + (3 * Z)) != 0, np.divide((4.0 * X), (X + (15.0 * Y) + (3.0 * Z))), 0)
     v_dash = np.where((X + (15 * Y) + (3 * Z)) != 0, np.divide((9.0 * Y), (X + (15.0 * Y) + (3.0 * Z))), 0)
