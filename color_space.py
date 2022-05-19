@@ -144,3 +144,52 @@ def BGR2GRAY(image: np.ndarray) -> np.ndarray:
         A grayscale image.
     """
     return RGB2GRAY(BGR2RGB(image))
+
+def RGB2CMY(image: np.ndarray) -> np.ndarray:
+    """
+    Converts an RGB image to CMY.
+
+    Args:
+        image: An RGB image.
+
+    Returns:
+        A CMY image.
+    """
+    return 1 - (image / 255.0)
+
+def BGR2CMY(image: np.ndarray) -> np.ndarray:
+    """
+    Converts a BGR image to CMY.
+
+    Args:
+        image: A BGR image.
+
+    Returns:
+        A CMY image.
+    """
+    return RGB2CMY(BGR2RGB(image))
+
+def CMY2RGB(image: np.ndarray) -> np.ndarray:
+    """
+    Converts a CMY image to RGB.
+
+    Args:
+        image: A CMY image.
+
+    Returns:
+        An RGB image.
+    """
+    image = (1 - image) * 255
+    return image.astype(np.uint8)
+
+def CMY2BGR(image: np.ndarray) -> np.ndarray:
+    """
+    Converts a CMY image to BGR.
+
+    Args:
+        image: A CMY image.
+
+    Returns:
+        A BGR image.
+    """
+    return RGB2BGR(CMY2RGB(image))
